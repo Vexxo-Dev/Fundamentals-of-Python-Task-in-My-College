@@ -1,17 +1,23 @@
 from tkinter import Tk, Label, Button, Entry
+import playsound
+import gtts
 
 root = Tk()
 root.title("Simple GUI")
-root.geometry("400x300")
+root.geometry("400x400")
 
-# Function to show success message
+# Function to Play sound in play button
+
+def play_sound():
+    tts = gtts.gTTS(text="Welcome to Our Program", lang="en")
+    tts.save("sound.mp3")
+    playsound.playsound("sound.mp3")
 
 def show_success():
     success_label = Label(root, text="Submission Successful!", fg="green", font=("Arial", 12))
     success_label.pack(pady=10)
  
 
-# Save Username and Password
 def save_credentials():
     if not entry_name.get() or not entry_password.get():
         error_window = Tk()
@@ -28,26 +34,6 @@ def save_credentials():
     password = entry_password.get()
     show_success()
 
-# Sign in window after submission
-
-def sign_in_window():
-    sign_in_window = Tk()
-    sign_in_window.title("Sign In")
-    sign_in_window.geometry("300x200")
-    
-    label_sign_in = Label(sign_in_window, text="Sign In Successful!", font=("Arial", 12))
-    label_sign_in.pack(pady=20)
-    
-    label_info = Label(sign_in_window, text="You can now close this window.", font=("Arial", 10))
-    label_info.pack(pady=10)
-
-    button_close = Button(sign_in_window, text="Close", command=sign_in_window.destroy)
-    button_close.pack(pady=10)
-    
-    sign_in_window.mainloop()
-
-
-# Enter Name and Password
 label = Label(root, text="Welcome to the Simple GUI Application", font=("Arial", 14))
 label.pack(pady=20)
 label_name = Label(root, text="Username:")
@@ -58,10 +44,9 @@ label_password = Label(root, text="Password:")
 label_password.pack(pady=5)
 entry_password = Entry(root, show='*')
 entry_password.pack(pady=5)
-ton_submit = Button(root, text="Submit", command=save_credentials) # add window sign in open
-ton_submit.config(command=lambda: [save_credentials(), sign_in_window()])
-
+ton_submit = Button(root, text="Submit", command=lambda: [save_credentials()]) # add window sign in open
 ton_submit.pack(pady=20)
-
+ton_play_sound = Button(root, text="Play Sound", command=lambda: [play_sound()])
+ton_play_sound.pack(pady=20)
 
 root.mainloop()
